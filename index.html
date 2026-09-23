@@ -168,17 +168,22 @@
   .cta-band p{color:var(--muted); margin-top:14px; max-width:48ch; font-size:15px;}
   footer{border-top:1px solid var(--line); padding:36px 0 0; color:var(--muted); font-size:13.5px; overflow:hidden;}
   footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; padding-bottom:36px;}
-  .footer-giant-wrap{overflow:hidden; height:clamp(50px,9vw,130px);}
+  .footer-giant-wrap{overflow:hidden; height:clamp(80px,14vw,200px); position:relative;}
   .footer-giant{
     font-family:'Chakra Petch', sans-serif; font-weight:700;
-    font-size:clamp(90px,18vw,260px); line-height:1;
-    color:transparent; -webkit-text-stroke:1.5px rgba(237,239,245,0.16);
+    font-size:clamp(120px,24vw,340px); line-height:1;
+    color:rgba(237,239,245,0.92);
     letter-spacing:-0.02em; text-align:center; white-space:nowrap;
-    transform:translateY(-4%);
+    transform:translateY(-2%);
+    filter:blur(1.5px);
+  }
+  .footer-giant-wrap::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(to bottom, transparent 45%, var(--ink) 96%);
+    pointer-events:none;
   }
 
   /* ---- scroll effects ---- */
-  .hero-art, .hero .hero-copy{ will-change:transform; }
   .locked{
     opacity:0; transform:translateY(26px) rotate(-2deg);
     transition:opacity .6s ease, transform .6s ease;
@@ -408,17 +413,6 @@
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if(!prefersReducedMotion){
-    // parallax leve no hero: arte e texto se movem em velocidades diferentes
-    const heroArt = document.querySelector('.hero-art');
-    const heroCopy = document.querySelector('.hero-copy');
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-      if(y < window.innerHeight){
-        if(heroArt) heroArt.style.transform = `translateY(${y * 0.18}px)`;
-        if(heroCopy) heroCopy.style.transform = `translateY(${y * -0.06}px)`;
-      }
-    }, {passive:true});
-
     // cards de trabalho flutuam pra posição quando entram na tela
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
