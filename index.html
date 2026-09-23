@@ -168,18 +168,23 @@
   .cta-band p{color:var(--muted); margin-top:14px; max-width:48ch; font-size:15px;}
   footer{border-top:1px solid var(--line); padding:36px 0 0; color:var(--muted); font-size:13.5px; overflow:hidden;}
   footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; padding-bottom:36px;}
-  .footer-giant-wrap{overflow:hidden; height:clamp(80px,14vw,200px); position:relative;}
+  .footer-giant-wrap{overflow:hidden; height:clamp(110px,18vw,260px); position:relative;}
   .footer-giant{
+    position:relative;
     font-family:'Chakra Petch', sans-serif; font-weight:700;
     font-size:clamp(120px,24vw,340px); line-height:1;
     color:rgba(237,239,245,0.92);
     letter-spacing:-0.02em; text-align:center; white-space:nowrap;
-    transform:translateY(-2%);
-    filter:blur(1.5px);
+  }
+  .footer-giant-blur{
+    position:absolute; inset:0;
+    filter:blur(7px);
+    -webkit-mask-image:linear-gradient(to bottom, transparent 0%, transparent 62%, black 100%);
+    mask-image:linear-gradient(to bottom, transparent 0%, transparent 62%, black 100%);
   }
   .footer-giant-wrap::after{
     content:''; position:absolute; inset:0;
-    background:linear-gradient(to bottom, transparent 45%, var(--ink) 96%);
+    background:linear-gradient(to bottom, transparent 78%, var(--ink) 100%);
     pointer-events:none;
   }
 
@@ -390,7 +395,10 @@
     <span>Rookie Studio — video editing</span>
     <span>© 2026</span>
   </div>
-  <div class="footer-giant-wrap"><div class="footer-giant">ROOKIE</div></div>
+  <div class="footer-giant-wrap">
+    <div class="footer-giant">ROOKIE</div>
+    <div class="footer-giant footer-giant-blur" aria-hidden="true">ROOKIE</div>
+  </div>
 </footer>
 
 <script>
