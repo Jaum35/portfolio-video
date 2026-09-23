@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rookie Studio — Video Editing</title>
+<meta name="description" content="Rookie Studio — edição de vídeo para criadores e marcas internacionais.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0B0D14;
+    --panel:#14171F;
+    --panel-2:#1B1E29;
+    --line: rgba(237,239,245,0.09);
+    --text:#EDEFF5;
+    --muted:#8A8FA3;
+    --magenta:#FF3D7F;
+    --cyan:#3DDCFF;
+    --radius: 10px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3, .display{
+    font-family:'Chakra Petch', sans-serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    line-height:1.05;
+  }
+  a{color:inherit; text-decoration:none;}
+  img,svg{display:block; max-width:100%;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
+  section{padding:96px 0;}
+  @media(max-width:640px){ section{padding:64px 0;} }
+
+  /* ---- nav ---- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,13,20,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:18px; padding-bottom:18px;
+  }
+  .logo{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Chakra Petch', sans-serif; font-weight:700; font-size:18px;
+  }
+  .logo-mark{width:22px; height:22px; flex:none;}
+  .navlinks{display:flex; gap:32px; font-size:14px; color:var(--muted);}
+  .navlinks a:hover{color:var(--text);}
+  .status-pill{
+    display:inline-flex; align-items:center; gap:8px;
+    border:1px solid var(--line); border-radius:999px;
+    padding:6px 14px; font-size:13px; color:var(--muted);
+  }
+  .status-dot{width:7px; height:7px; border-radius:50%; background:var(--cyan); box-shadow:0 0 8px var(--cyan);}
+  @media(max-width:720px){ .navlinks{display:none;} }
+
+  /* ---- hero ---- */
+  .hero{padding-top:88px; padding-bottom:80px;}
+  .hero-grid{
+    display:grid; grid-template-columns: 1.3fr 0.9fr; gap:56px; align-items:center;
+  }
+  @media(max-width:860px){ .hero-grid{grid-template-columns:1fr;} }
+  .eyebrow{margin-bottom:22px;}
+  .hero h1{
+    font-size:clamp(44px, 7vw, 78px);
+    color:var(--text);
+  }
+  .hero h1 span{color:var(--cyan);}
+  .hero p.lede{
+    margin-top:22px; max-width:46ch; color:var(--muted); font-size:17px;
+  }
+  .hero .cta-row{margin-top:34px; display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 22px; border-radius:8px; font-size:14px; font-weight:600;
+    border:1px solid var(--line);
+  }
+  .btn-primary{background:var(--magenta); color:#0B0D14; border-color:var(--magenta);}
+  .btn-ghost{color:var(--text);}
+  .hero-art{
+    aspect-ratio:1/1; border-radius:16px;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(255,61,127,0.35), transparent 55%),
+      radial-gradient(circle at 75% 75%, rgba(61,220,255,0.28), transparent 55%),
+      var(--panel);
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+  }
+  .hero-art svg{width:58%; height:58%;}
+
+  /* ---- toolbox ---- */
+  .toolbox-head{display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap; margin-bottom:36px;}
+  .toolbox-head h2{font-size:clamp(28px,4vw,38px);}
+  .toolbox-head p{color:var(--muted); max-width:38ch; font-size:15px;}
+  .tool-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
+  @media(max-width:720px){ .tool-grid{grid-template-columns:repeat(2,1fr);} }
+  .tool-card{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:20px; display:flex; flex-direction:column; gap:10px; min-height:110px; justify-content:space-between;
+  }
+  .tool-card .lvl{font-size:12px; color:var(--cyan);}
+  .tool-card .name{font-weight:600; font-size:15px;}
+
+  /* ---- services ---- */
+  .services-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
+  @media(max-width:720px){ .services-grid{grid-template-columns:1fr;} }
+  .service{background:var(--panel); padding:32px;}
+  .service .num{font-size:13px; color:var(--muted); margin-bottom:14px;}
+  .service h3{font-size:20px; margin-bottom:10px;}
+  .service p{color:var(--muted); font-size:14.5px; max-width:40ch;}
+
+  /* ---- work ---- */
+  .work-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  @media(max-width:860px){ .work-grid{grid-template-columns:1fr 1fr;} }
+  @media(max-width:560px){ .work-grid{grid-template-columns:1fr;} }
+  .locked{
+    aspect-ratio:4/5; border-radius:var(--radius); border:1px dashed var(--line);
+    background:repeating-linear-gradient(135deg, var(--panel), var(--panel) 10px, var(--panel-2) 10px, var(--panel-2) 20px);
+    display:flex; flex-direction:column; justify-content:space-between; padding:18px;
+  }
+  .locked .tag{font-size:12px; color:var(--muted);}
+  .locked .center{flex:1; display:flex; align-items:center; justify-content:center;}
+  .locked .center svg{width:34px; height:34px; opacity:0.7;}
+  .locked .stage{font-size:13px; color:var(--muted);}
+  .work-note{margin-top:28px; color:var(--muted); font-size:14.5px; max-width:56ch;}
+
+  /* ---- about ---- */
+  .about-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; align-items:start;}
+  @media(max-width:860px){ .about-grid{grid-template-columns:1fr;} }
+  .about h2{font-size:clamp(28px,4.4vw,42px); max-width:14ch;}
+  .about-body p{color:var(--muted); margin-bottom:18px; font-size:15.5px;}
+  .about-body strong{color:var(--text);}
+  .tag-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:22px;}
+  .tag-pill{border:1px solid var(--line); border-radius:999px; padding:6px 13px; font-size:12.5px; color:var(--muted);}
+
+  /* ---- faq ---- */
+  .faq-item{border-top:1px solid var(--line);}
+  .faq-item:last-child{border-bottom:1px solid var(--line);}
+  .faq-q{
+    width:100%; display:flex; justify-content:space-between; align-items:center;
+    padding:22px 4px; background:none; border:none; color:var(--text);
+    font-family:inherit; font-size:16px; font-weight:600; text-align:left; cursor:pointer;
+  }
+  .faq-q .plus{color:var(--cyan); font-size:20px; transition:transform .2s;}
+  .faq-item.open .plus{transform:rotate(45deg);}
+  .faq-a{max-height:0; overflow:hidden; transition:max-height .25s ease;}
+  .faq-a p{color:var(--muted); padding:0 4px 22px; font-size:14.5px; max-width:62ch;}
+
+  /* ---- contact / footer ---- */
+  .cta-band{background:var(--panel); border-radius:16px; border:1px solid var(--line); padding:56px; text-align:left;}
+  @media(max-width:640px){ .cta-band{padding:32px;} }
+  .cta-band h2{font-size:clamp(26px,4vw,38px); max-width:16ch;}
+  .cta-band p{color:var(--muted); margin-top:14px; max-width:48ch; font-size:15px;}
+  footer{border-top:1px solid var(--line); padding:36px 0; color:var(--muted); font-size:13.5px;}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="logo">
+      <svg class="logo-mark" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 8v8l10 6 10-6V8L12 2z" stroke="#3DDCFF" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 2v20M2 8l10 6 10-6" stroke="#3DDCFF" stroke-width="1.2" opacity="0.5"/></svg>
+      Rookie Studio
+    </div>
+    <div class="navlinks">
+      <a href="#toolbox">Ferramentas</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#trabalhos">Trabalhos</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <span class="status-pill"><span class="status-dot"></span>Abrindo os primeiros projetos</span>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow status-pill"><span class="status-dot"></span>Novo na jornada, sério no ofício</div>
+      <h1>Editando vídeo,<br>uma <span>fase</span> de cada vez.</h1>
+      <p class="lede">Sou editor de vídeo em formação, construindo a Rookie Studio do zero para atender criadores e marcas internacionais. Aprendendo Premiere Pro e After Effects na prática, um corte por vez.</p>
+      <div class="cta-row">
+        <a href="#trabalhos" class="btn btn-primary">Ver o progresso</a>
+        <a href="#sobre" class="btn btn-ghost">Conhecer a história</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <!-- pixel-style dragon head, simple geometric -->
+      <svg viewBox="0 0 64 64" shape-rendering="crispEdges">
+        <g fill="#FF3D7F">
+          <rect x="20" y="8" width="4" height="4"/><rect x="24" y="8" width="4" height="4"/>
+          <rect x="16" y="12" width="4" height="4"/><rect x="28" y="12" width="4" height="4"/>
+          <rect x="16" y="16" width="24" height="4"/>
+          <rect x="12" y="20" width="4" height="4"/><rect x="40" y="20" width="4" height="4"/>
+        </g>
+        <g fill="#3DDCFF">
+          <rect x="12" y="24" width="32" height="16"/>
+          <rect x="8" y="28" width="4" height="8"/>
+          <rect x="44" y="28" width="4" height="8"/>
+        </g>
+        <g fill="#0B0D14">
+          <rect x="18" y="28" width="4" height="4"/>
+          <rect x="34" y="28" width="4" height="4"/>
+        </g>
+        <g fill="#3DDCFF">
+          <rect x="16" y="40" width="6" height="6"/><rect x="34" y="40" width="6" height="6"/>
+          <rect x="12" y="46" width="6" height="6"/><rect x="38" y="46" width="6" height="6"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="toolbox">
+  <div class="wrap">
+    <div class="toolbox-head">
+      <h2>O inventário<br>de ferramentas.</h2>
+      <p>Ainda subindo de nível em cada uma — sem atalho, só prática todo dia.</p>
+    </div>
+    <div class="tool-grid">
+      <div class="tool-card"><span class="lvl">Em treino</span><span class="name">Adobe Premiere Pro</span></div>
+      <div class="tool-card"><span class="lvl">Em treino</span><span class="name">Adobe After Effects</span></div>
+      <div class="tool-card"><span class="lvl">Base</span><span class="name">Prospecção &amp; negócio internacional</span></div>
+      <div class="tool-card"><span class="lvl">Base</span><span class="name">Recebimento &amp; impostos p/ freela</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="servicos">
+  <div class="wrap">
+    <div class="toolbox-head">
+      <h2>O que a Rookie<br>vai entregar.</h2>
+      <p>O foco vai nascer aqui, mas essas são as frentes que estou treinando pra oferecer.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service">
+        <div class="num">01</div>
+        <h3>Edição &amp; ritmo</h3>
+        <p>Cortes que seguram atenção do início ao fim, sem gordura sobrando na timeline.</p>
+      </div>
+      <div class="service">
+        <div class="num">02</div>
+        <h3>Motion &amp; legendas</h3>
+        <p>Textos animados, legendas estilizadas e pequenos efeitos que dão personalidade ao vídeo.</p>
+      </div>
+      <div class="service">
+        <div class="num">03</div>
+        <h3>Cor &amp; áudio</h3>
+        <p>Ajuste de cor e mixagem básica pra o vídeo sair redondo, sem picos de volume ou imagem "crua".</p>
+      </div>
+      <div class="service">
+        <div class="num">04</div>
+        <h3>Reaproveitamento p/ redes</h3>
+        <p>Transformar um vídeo longo em cortes verticais pra Shorts, Reels e TikTok.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="trabalhos">
+  <div class="wrap">
+    <div class="toolbox-head">
+      <h2>Trabalhos —<br>fases ainda bloqueadas.</h2>
+      <p>Nenhum projeto de cliente ainda. Esse fim de semana o primeiro corte entra em produção.</p>
+    </div>
+    <div class="work-grid">
+      <div class="locked">
+        <span class="tag">Projeto 01</span>
+        <div class="center">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="1.5" stroke="#8A8FA3" stroke-width="1.6"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="#8A8FA3" stroke-width="1.6"/></svg>
+        </div>
+        <span class="stage">Em produção</span>
+      </div>
+      <div class="locked">
+        <span class="tag">Projeto 02</span>
+        <div class="center">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="1.5" stroke="#8A8FA3" stroke-width="1.6"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="#8A8FA3" stroke-width="1.6"/></svg>
+        </div>
+        <span class="stage">Bloqueado</span>
+      </div>
+      <div class="locked">
+        <span class="tag">Projeto 03</span>
+        <div class="center">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="1.5" stroke="#8A8FA3" stroke-width="1.6"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="#8A8FA3" stroke-width="1.6"/></svg>
+        </div>
+        <span class="stage">Bloqueado</span>
+      </div>
+    </div>
+    <p class="work-note">Cada projeto entra aqui assim que fica pronto — o primeiro é um vídeo do YouTube ou uma live, editado só pra treino e portfólio.</p>
+  </div>
+</section>
+
+<section id="sobre">
+  <div class="wrap about-grid">
+    <h2>Começando do<br>zero, de propósito.</h2>
+    <div class="about-body">
+      <p><strong>Peguei gosto por jogos antes de pegar gosto por edição</strong> — e é de lá que vem o nome. Rookie porque é exatamente onde estou: no início, aprendendo as regras, tentando de novo até acertar o corte.</p>
+      <p>Sempre fui do time dragão e ninja — precisão silenciosa e um pouco de fogo quando precisa. Jinx sempre foi minha campeã favorita: caótica, mas com timing perfeito. É meio assim que penso edição: parece bagunça até o corte certo entrar no beat certo.</p>
+      <p>Gosto de pixel art pelo mesmo motivo que gosto de motion graphics: cada quadrado, cada frame, importa. E de webcomics pela narrativa em blocos — corte, corte, corte, revelação.</p>
+      <p>A parte técnica ainda está em construção. A parte de levar isso a sério como profissão — atender bem, entregar no prazo, cobrar certo — essa eu já comecei a estudar antes mesmo de terminar o primeiro projeto.</p>
+      <div class="tag-row">
+        <span class="tag-pill">Pixel art</span>
+        <span class="tag-pill">Webcomics</span>
+        <span class="tag-pill">Dragões &amp; ninjas</span>
+        <span class="tag-pill">Clientes internacionais</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="toolbox-head">
+      <h2>Perguntas que<br>talvez você tenha.</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item open">
+        <button class="faq-q">Você já tem experiência com clientes? <span class="plus">+</span></button>
+        <div class="faq-a" style="max-height:200px"><p>Ainda não formalmente — a Rookie Studio está nascendo agora. O que já existe é disciplina: estudo constante da parte técnica e da parte de negócio pra atender bem desde o primeiro projeto.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Quais ferramentas você usa? <span class="plus">+</span></button>
+        <div class="faq-a"><p>Adobe Premiere Pro para edição e After Effects para motion — as duas em treino ativo, com prática diária.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Você atende clientes de outros países? <span class="plus">+</span></button>
+        <div class="faq-a"><p>Sim, esse é o foco principal da Rookie Studio. Comunicação em inglês, prazos claros e entrega organizada fazem parte do plano desde o início.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Como vai funcionar preço e prazo? <span class="plus">+</span></button>
+        <div class="faq-a"><p>Ainda sendo definido. A ideia é ter uma tabela clara por tipo de entrega (short-form, vídeo longo, motion) assim que os primeiros projetos de portfólio estiverem prontos.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contato">
+  <div class="wrap">
+    <div class="cta-band">
+      <h2>Contato chegando<br>em breve.</h2>
+      <p>Os canais oficiais (email, Discord e X) da Rookie Studio ainda estão sendo criados com foco na marca. Assim que estiverem prontos, entram aqui.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Rookie Studio — video editing</span>
+    <span>© 2026</span>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const q = item.querySelector('.faq-q');
+    const a = item.querySelector('.faq-a');
+    q.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-a').style.maxHeight = 0;
+      });
+      if(!isOpen){
+        item.classList.add('open');
+        a.style.maxHeight = a.scrollHeight + 'px';
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
