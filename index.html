@@ -166,8 +166,29 @@
   @media(max-width:640px){ .cta-band{padding:32px;} }
   .cta-band h2{font-size:clamp(26px,4vw,38px); max-width:16ch;}
   .cta-band p{color:var(--muted); margin-top:14px; max-width:48ch; font-size:15px;}
-  footer{border-top:1px solid var(--line); padding:36px 0; color:var(--muted); font-size:13.5px;}
-  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+  footer{border-top:1px solid var(--line); padding:36px 0 0; color:var(--muted); font-size:13.5px; overflow:hidden;}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; padding-bottom:36px;}
+  .footer-giant-wrap{overflow:hidden; height:clamp(50px,9vw,130px);}
+  .footer-giant{
+    font-family:'Chakra Petch', sans-serif; font-weight:700;
+    font-size:clamp(90px,18vw,260px); line-height:1;
+    color:transparent; -webkit-text-stroke:1.5px rgba(237,239,245,0.16);
+    letter-spacing:-0.02em; text-align:center; white-space:nowrap;
+    transform:translateY(-4%);
+  }
+
+  /* ---- scroll effects ---- */
+  .hero-art, .hero .hero-copy{ will-change:transform; }
+  .locked{
+    opacity:0; transform:translateY(26px) rotate(-2deg);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .locked:nth-child(2){transition-delay:.08s;}
+  .locked:nth-child(3){transition-delay:.16s;}
+  .locked.in-view{opacity:1; transform:translateY(0) rotate(0deg);}
+  @media (prefers-reduced-motion: reduce){
+    .locked{opacity:1; transform:none; transition:none;}
+  }
 </style>
 </head>
 <body>
@@ -191,7 +212,7 @@
 
 <section class="hero">
   <div class="wrap hero-grid">
-    <div>
+    <div class="hero-copy">
       <div class="eyebrow status-pill"><span class="status-dot"></span>Novo na jornada, sério no ofício</div>
       <h1>Editando vídeo,<br>uma <span>fase</span> de cada vez.</h1>
       <p class="lede">Sou editor de vídeo em formação, construindo a Rookie Studio do zero para atender criadores e marcas internacionais. Aprendendo Premiere Pro e After Effects na prática, um corte por vez.</p>
@@ -364,6 +385,7 @@
     <span>Rookie Studio — video editing</span>
     <span>© 2026</span>
   </div>
+  <div class="footer-giant-wrap"><div class="footer-giant">ROOKIE</div></div>
 </footer>
 
 <script>
@@ -382,6 +404,34 @@
       }
     });
   });
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if(!prefersReducedMotion){
+    // parallax leve no hero: arte e texto se movem em velocidades diferentes
+    const heroArt = document.querySelector('.hero-art');
+    const heroCopy = document.querySelector('.hero-copy');
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      if(y < window.innerHeight){
+        if(heroArt) heroArt.style.transform = `translateY(${y * 0.18}px)`;
+        if(heroCopy) heroCopy.style.transform = `translateY(${y * -0.06}px)`;
+      }
+    }, {passive:true});
+
+    // cards de trabalho flutuam pra posição quando entram na tela
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.25});
+    document.querySelectorAll('.locked').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.locked').forEach(el => el.classList.add('in-view'));
+  }
 </script>
 
 </body>
